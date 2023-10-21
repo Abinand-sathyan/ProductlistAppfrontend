@@ -62,7 +62,7 @@ const Subcategory = ({ categories, onCreateCategory }) => {
                   value={parentCategory}
                   onChange={handleInputChange}
                 >
-                  <option value={null}>No Parent (Top-level Category)</option>
+                 
                   {categories.map((category) => (
                     <option key={category?._id} value={category?._id}>
                       {category?.categoryname}
