@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { getparentcategory } from "../../apis/Apis";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { getsubproduct } from "../../apis/Apis";
 
 function Category() {
   const [categories, setCategories] = useState([]);
+  const [parentId, setParentid] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     (async function invoke() {
       await getparentcategory().then((res) => {
         setCategories(res?.data?.parentcategory);
+        setParentid(res?.data?.categoryid);
       });
     })();
   }, []);
 
-  const handleInputChange = (event) => {
-    const { value } = event.target;
-
-    navigate(`/sublist/${value}`);
-  };
   return (
     <div>
       <form className="bg-white mx-auto my-6 flex flex-col w-full   max-w-2xl ">
@@ -37,8 +36,6 @@ function Category() {
                 <select
                   className=" text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                   name="parentCategory"
-                  // value={parentCategory}
-                  onChange={handleInputChange}
                 >
                   {categories.map((category) => (
                     <option key={category._id} value={category._id}>
@@ -46,6 +43,17 @@ function Category() {
                     </option>
                   ))}
                 </select>
+              </div>
+              <div className="mt-8">
+                <button
+                  type="submit"
+                  className="bg-siteviolet text-white font-bold py-2 px-4 w-full rounded-full hover:bg-gray-600"
+                  onClick={() => {
+                    navigate(`/sublist/${parentId}`);
+                  }}
+                >
+                  SUB CATEGORIES
+                </button>
               </div>
             </div>
           </div>
